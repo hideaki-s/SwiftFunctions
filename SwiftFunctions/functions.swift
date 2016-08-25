@@ -9,6 +9,16 @@
 import Foundation
 import UIKit
 
+// 0000000 -> 0,000,000
+func NumComma(input:Int) -> String{
+	let formatter = NSNumberFormatter()
+	formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+	formatter.groupingSeparator = ","
+	formatter.groupingSize = 3
+
+	return formatter.stringFromNumber(input)!
+}
+
 // print customize
 public func print(value:Any){
 	#if DEBUG
