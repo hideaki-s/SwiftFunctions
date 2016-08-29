@@ -138,24 +138,6 @@ func silver(alpha:Float) -> UIColor { return hexColor("#bdc3c7", alpha: alpha) }
 func concrete(alpha:Float) -> UIColor { return hexColor("#95a5a6", alpha: alpha) }
 func asbesto(alpha:Float) -> UIColor { return hexColor("#7f8c8d", alpha: alpha) }
 
-// print customize ************************************************************
-public func print(value:String){
-	#if DEBUG
-//		var message = ""
-//		for element in value {
-//			var eachMessage = "\(element)"
-//			let pattern = "Optional\\((.+)\\)"
-//			eachMessage = eachMessage
-//				.stringByReplacingOccurrencesOfString(pattern,
-//				                                      withString:"$1",
-//				                                      options:.RegularExpressionSearch,
-//				                                      range: nil)
-//			message += eachMessage
-//		}
-		Swift.print(value)
-	#endif
-}
-
 // original log output ********************************************************
 public func Log(message: String,
                 function: String = #function,
