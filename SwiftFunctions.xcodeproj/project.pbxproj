@@ -13,6 +13,11 @@
 		1E0FAF181D6D8D4E00245AF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E0FAF171D6D8D4E00245AF5 /* Assets.xcassets */; };
 		1E0FAF1B1D6D8D4E00245AF5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E0FAF191D6D8D4E00245AF5 /* LaunchScreen.storyboard */; };
 		1E0FAF231D6D8DBB00245AF5 /* functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0FAF221D6D8DBB00245AF5 /* functions.swift */; };
+		1EE28BEB1D6F16DF00E95669 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 1EE28BE61D6F16DF00E95669 /* back.png */; };
+		1EE28BEC1D6F16DF00E95669 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 1EE28BE71D6F16DF00E95669 /* home.png */; };
+		1EE28BED1D6F16DF00E95669 /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = 1EE28BE81D6F16DF00E95669 /* next.png */; };
+		1EE28BEE1D6F16DF00E95669 /* reload.png in Resources */ = {isa = PBXBuildFile; fileRef = 1EE28BE91D6F16DF00E95669 /* reload.png */; };
+		1EE28BEF1D6F16DF00E95669 /* stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 1EE28BEA1D6F16DF00E95669 /* stop.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +29,11 @@
 		1E0FAF1A1D6D8D4E00245AF5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1E0FAF1C1D6D8D4E00245AF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1E0FAF221D6D8DBB00245AF5 /* functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = functions.swift; sourceTree = "<group>"; };
+		1EE28BE61D6F16DF00E95669 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		1EE28BE71D6F16DF00E95669 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
+		1EE28BE81D6F16DF00E95669 /* next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = next.png; sourceTree = "<group>"; };
+		1EE28BE91D6F16DF00E95669 /* reload.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reload.png; sourceTree = "<group>"; };
+		1EE28BEA1D6F16DF00E95669 /* stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +50,7 @@
 		1E0FAF041D6D8D4E00245AF5 = {
 			isa = PBXGroup;
 			children = (
+				1EE28BE51D6F16DF00E95669 /* images */,
 				1E0FAF0F1D6D8D4E00245AF5 /* SwiftFunctions */,
 				1E0FAF0E1D6D8D4E00245AF5 /* Products */,
 			);
@@ -65,6 +76,18 @@
 				1E0FAF221D6D8DBB00245AF5 /* functions.swift */,
 			);
 			path = SwiftFunctions;
+			sourceTree = "<group>";
+		};
+		1EE28BE51D6F16DF00E95669 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				1EE28BE61D6F16DF00E95669 /* back.png */,
+				1EE28BE71D6F16DF00E95669 /* home.png */,
+				1EE28BE81D6F16DF00E95669 /* next.png */,
+				1EE28BE91D6F16DF00E95669 /* reload.png */,
+				1EE28BEA1D6F16DF00E95669 /* stop.png */,
+			);
+			path = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,9 +148,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1EE28BEB1D6F16DF00E95669 /* back.png in Resources */,
+				1EE28BEF1D6F16DF00E95669 /* stop.png in Resources */,
+				1EE28BEC1D6F16DF00E95669 /* home.png in Resources */,
+				1EE28BED1D6F16DF00E95669 /* next.png in Resources */,
 				1E0FAF1B1D6D8D4E00245AF5 /* LaunchScreen.storyboard in Resources */,
 				1E0FAF181D6D8D4E00245AF5 /* Assets.xcassets in Resources */,
 				1E0FAF161D6D8D4E00245AF5 /* Main.storyboard in Resources */,
+				1EE28BEE1D6F16DF00E95669 /* reload.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,8 +281,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = SwiftFunctions/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.toyosu.SwiftFunctions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -266,6 +299,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SwiftFunctions/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.toyosu.SwiftFunctions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -290,6 +324,7 @@
 				1E0FAF211D6D8D4E00245AF5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -18,9 +18,20 @@ func numWithComma(input:Int) -> String{
 	return formatter.stringFromNumber(input)!
 }
 
+// Last Day of Month **********************************************************
+// 月末の日付を取得
+func getLastMonthOfDay() -> Int {
+	let cal = NSCalendar.currentCalendar()
+	let date = NSDate()
+	let range = cal.rangeOfUnit(NSCalendarUnit.Day, inUnit: NSCalendarUnit.Month, forDate: date)
+	let max = range.length
+	return max
+}
+
 // Current Timestamp as String ************************************************
+// 現在日時を取得
 func getNowTimeStamp() -> String {
-	let now = NSDate() // 現在日時の取得
+	let now = NSDate()
 	let dateFormatter = NSDateFormatter()
 	dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP")
 	dateFormatter.timeStyle = .MediumStyle
@@ -30,9 +41,10 @@ func getNowTimeStamp() -> String {
 }
 
 // Current Year ***************************************************************
+// 現在の年を取得
 func getCurrentYear() -> Int {
 	var year:Int = 0
-	let now = NSDate() //現在時刻
+	let now = NSDate()
 	let df = NSDateFormatter()
 	df.timeStyle = .ShortStyle//ここを変更すると出力日付の情報量を変更可能
 	df.dateStyle = .ShortStyle//ここを変更すると出力日付の情報量を変更可能
@@ -43,6 +55,7 @@ func getCurrentYear() -> Int {
 }
 
 // Last Year ******************************************************************
+// 去年の年を取得
 func getLastYear() -> Int {
 	let now = NSDate() //現在時刻
 	let df = NSDateFormatter()
@@ -55,6 +68,7 @@ func getLastYear() -> Int {
 }
 
 // RandomColor  ***************************************************************
+// ランダムな色を取得
 func getRandomColor() -> UIColor{
 	let randomRed:CGFloat = CGFloat(drand48())
 	let randomGreen:CGFloat = CGFloat(drand48())
@@ -125,20 +139,20 @@ func concrete(alpha:Float) -> UIColor { return hexColor("#95a5a6", alpha: alpha)
 func asbesto(alpha:Float) -> UIColor { return hexColor("#7f8c8d", alpha: alpha) }
 
 // print customize ************************************************************
-public func print(value:Any){
+public func print(value:String){
 	#if DEBUG
-		var message = ""
-		for element in value {
-			var eachMessage = "\(element)"
-			let pattern = "Optional\\((.+)\\)"
-			eachMessage = eachMessage
-				.stringByReplacingOccurrencesOfString(pattern,
-				                                      withString:"$1",
-				                                      options:.RegularExpressionSearch,
-				                                      range: nil)
-			message += eachMessage
-		}
-		Swift.print(message)
+//		var message = ""
+//		for element in value {
+//			var eachMessage = "\(element)"
+//			let pattern = "Optional\\((.+)\\)"
+//			eachMessage = eachMessage
+//				.stringByReplacingOccurrencesOfString(pattern,
+//				                                      withString:"$1",
+//				                                      options:.RegularExpressionSearch,
+//				                                      range: nil)
+//			message += eachMessage
+//		}
+		Swift.print(value)
 	#endif
 }
 
