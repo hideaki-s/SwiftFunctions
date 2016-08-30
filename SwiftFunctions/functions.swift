@@ -8,6 +8,32 @@
 
 import Foundation
 import UIKit
+import WebKit
+
+func clearCache() {
+	if #available(iOS 9.0, *) {
+		let websiteDataTypes = NSSet(array: [WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeMemoryCache, WKWebsiteDataTypeLocalStorage, WKWebsiteDataTypeWebSQLDatabases, WKWebsiteDataTypeOfflineWebApplicationCache])
+		let date = NSDate(timeIntervalSince1970: 0)
+		WKWebsiteDataStore.defaultDataStore().removeDataOfTypes(websiteDataTypes as! Set<String>, modifiedSince: date, completionHandler:{
+			Log("cache removed.")
+		})
+	} else {
+		var libraryPath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.LibraryDirectory, NSSearchPathDomainMask.UserDomainMask, false).first!
+		libraryPath += "/Caches"
+		do {
+			try NSFileManager.defaultManager().removeItemAtPath(libraryPath)
+		} catch {
+			Log("error")
+		}
+		NSURLCache.sharedURLCache().removeAllCachedResponses()
+	}
+}
+
+func getAppDirectryPath() -> Array<String> {
+	let path1 = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as Array<String>
+	Log(path1[0])
+	return path1
+}
 
 // 0000000 -> 0,000,000 *******************************************************
 func numWithComma(input:Int) -> String{
