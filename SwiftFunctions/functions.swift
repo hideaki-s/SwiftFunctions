@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import WebKit
 
+// Cache Clear about WebKit
 func clearCache() {
 	if #available(iOS 9.0, *) {
 		let websiteDataTypes = NSSet(array: [WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeMemoryCache, WKWebsiteDataTypeLocalStorage, WKWebsiteDataTypeWebSQLDatabases, WKWebsiteDataTypeOfflineWebApplicationCache])
@@ -29,10 +30,26 @@ func clearCache() {
 	}
 }
 
+// Getting App Directory Path Full
 func getAppDirectryPath() -> Array<String> {
 	let path1 = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as Array<String>
 	Log(path1[0])
 	return path1
+}
+
+// UILabel Class with Padding
+class PaddingLabel: UILabel {
+	let padding = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+	override func drawTextInRect(rect: CGRect) {
+		let newRect = UIEdgeInsetsInsetRect(rect, padding)
+		super.drawTextInRect(newRect)
+	}
+	override func intrinsicContentSize() -> CGSize {
+		var intrinsicContentSize = super.intrinsicContentSize()
+		intrinsicContentSize.height += padding.top + padding.bottom
+		intrinsicContentSize.width += padding.left + padding.right
+		return intrinsicContentSize
+	}
 }
 
 // 0000000 -> 0,000,000 *******************************************************
