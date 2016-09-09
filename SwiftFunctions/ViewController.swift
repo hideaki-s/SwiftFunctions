@@ -21,11 +21,39 @@ class ViewController: UIViewController, SFSafariViewControllerDelegate {
 		button.setTitle("OpenSafari", forState: .Normal)
 		button.addTarget(self, action: #selector(self.openSafari), forControlEvents: .TouchUpInside)
 		button.setTitleColor(UIColor.blackColor(), forState: .Normal)
+		button.backgroundColor = UIColor.lightGrayColor()
+		button.layer.cornerRadius = 9
 		self.view.addSubview(button)
 
 	}
 
+	override func viewWillAppear(animated: Bool) {
+		Log_method()
+		super.viewWillAppear(animated)
+	}
+
+	override func viewDidAppear(animated: Bool) {
+		Log_method()
+		super.viewDidAppear(animated)
+	}
+
+	override func viewWillDisappear(animated: Bool) {
+		Log_method()
+		super.viewWillDisappear(animated)
+	}
+
+	override func viewDidDisappear(animated: Bool) {
+		Log_method()
+		super.viewDidDisappear(animated)
+	}
+
+	override func didReceiveMemoryWarning() {
+		Log_method()
+		super.didReceiveMemoryWarning()
+	}
+
 	func openSafari() {
+		Log_method()
 		if #available(iOS 9.0, *) {
 			let _url:NSURL = NSURL(string: urlString)!
 			let _brow = SFSafariViewController(URL: _url, entersReaderIfAvailable: true)
@@ -40,23 +68,15 @@ class ViewController: UIViewController, SFSafariViewControllerDelegate {
 		}
 	}
 
-	override func viewDidAppear(animated: Bool) {
-		super.viewDidAppear(animated)
-	}
-
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-	}
-
 	// SafariViewController Delegate Method
 	@available(iOS 9.0, *)
 	func safariViewController(controller: SFSafariViewController, didCompleteInitialLoad didLoadSuccessfully: Bool) {
-		print("safariview:didCompleteInitialLoad")
+		Log_method()
 	}
 
 	@available(iOS 9.0, *)
 	func safariViewControllerDidFinish(controller: SFSafariViewController) {
-		print("safariview:closeSafari")
+		Log_method()
 	}
 }
 

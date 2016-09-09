@@ -182,6 +182,18 @@ func concrete(alpha:Float) -> UIColor { return hexColor("#95a5a6", alpha: alpha)
 func asbesto(alpha:Float) -> UIColor { return hexColor("#7f8c8d", alpha: alpha) }
 
 // original log output ********************************************************
+public func Log_method(function: String = #function, file: String = #file, line: Int = #line) {
+	#if DEBUG
+		let now = NSDate() // 現在日時の取得
+		let dateFormatter = NSDateFormatter()
+		dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP")
+		dateFormatter.timeStyle = .MediumStyle
+		dateFormatter.dateStyle = .MediumStyle
+		let now_time = dateFormatter.stringFromDate(now)
+		print("[",now_time,"] \(file), Func: \(function), Line: \(line))")
+	#endif
+}
+
 public func Log(message: String,
                 function: String = #function,
                 file: String = #file,
@@ -194,6 +206,6 @@ public func Log(message: String,
 		dateFormatter.dateStyle = .MediumStyle
 		let now_time = dateFormatter.stringFromDate(now)
 
-		print("[",now_time,"] \"\(message)\" (File: \(file), Function: \(function), Line: \(line))")
+		print("[",now_time,"] \"\(message)\" \(file), Func: \(function), Line: \(line))")
 	#endif
 }
