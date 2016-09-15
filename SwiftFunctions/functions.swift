@@ -14,25 +14,25 @@ import WebKit
 func clearCache() {
 	if #available(iOS 9.0, *) {
 		let websiteDataTypes = NSSet(array: [WKWebsiteDataTypeDiskCache, WKWebsiteDataTypeMemoryCache, WKWebsiteDataTypeLocalStorage, WKWebsiteDataTypeWebSQLDatabases, WKWebsiteDataTypeOfflineWebApplicationCache])
-		let date = NSDate(timeIntervalSince1970: 0)
-		WKWebsiteDataStore.defaultDataStore().removeDataOfTypes(websiteDataTypes as! Set<String>, modifiedSince: date, completionHandler:{
+		let date = Date(timeIntervalSince1970: 0)
+		WKWebsiteDataStore.default().removeData(ofTypes: websiteDataTypes as! Set<String>, modifiedSince: date, completionHandler:{
 			Log("cache removed.")
 		})
 	} else {
-		var libraryPath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.LibraryDirectory, NSSearchPathDomainMask.UserDomainMask, false).first!
+		var libraryPath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.libraryDirectory, FileManager.SearchPathDomainMask.userDomainMask, false).first!
 		libraryPath += "/Caches"
 		do {
-			try NSFileManager.defaultManager().removeItemAtPath(libraryPath)
+			try FileManager.default.removeItem(atPath: libraryPath)
 		} catch {
 			Log("error")
 		}
-		NSURLCache.sharedURLCache().removeAllCachedResponses()
+		URLCache.shared.removeAllCachedResponses()
 	}
 }
 
 // Getting App Directory Path Full
 func getAppDirectryPath() -> Array<String> {
-	let path1 = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as Array<String>
+	let path1 = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) as Array<String>
 	Log(path1[0])
 	return path1
 }
@@ -40,12 +40,12 @@ func getAppDirectryPath() -> Array<String> {
 // UILabel Class with Padding
 class PaddingLabel: UILabel {
 	let padding = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
-	override func drawTextInRect(rect: CGRect) {
+	override func drawText(in rect: CGRect) {
 		let newRect = UIEdgeInsetsInsetRect(rect, padding)
-		super.drawTextInRect(newRect)
+		super.drawText(in: newRect)
 	}
-	override func intrinsicContentSize() -> CGSize {
-		var intrinsicContentSize = super.intrinsicContentSize()
+	override var intrinsicContentSize : CGSize {
+		var intrinsicContentSize = super.intrinsicContentSize
 		intrinsicContentSize.height += padding.top + padding.bottom
 		intrinsicContentSize.width += padding.left + padding.right
 		return intrinsicContentSize
@@ -53,20 +53,21 @@ class PaddingLabel: UILabel {
 }
 
 // 0000000 -> 0,000,000 *******************************************************
-func numWithComma(input:Int) -> String{
-	let formatter = NSNumberFormatter()
-	formatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+func numWithComma(_ input:Int) -> String{
+	let formatter = NumberFormatter()
+	formatter.numberStyle = NumberFormatter.Style.decimal
 	formatter.groupingSeparator = ","
 	formatter.groupingSize = 3
-	return formatter.stringFromNumber(input)!
+	let str = formatter.string(from: input as NSNumber)!
+	return str
 }
 
 // Last Day of Month **********************************************************
 // 月末の日付を取得
 func getLastMonthOfDay() -> Int {
-	let cal = NSCalendar.currentCalendar()
-	let date = NSDate()
-	let range = cal.rangeOfUnit(NSCalendarUnit.Day, inUnit: NSCalendarUnit.Month, forDate: date)
+	let cal = Calendar.current
+	let date = Date()
+	let range = (cal as NSCalendar).range(of: NSCalendar.Unit.day, in: NSCalendar.Unit.month, for: date)
 	let max = range.length
 	return max
 }
@@ -74,12 +75,12 @@ func getLastMonthOfDay() -> Int {
 // Current Timestamp as String ************************************************
 // 現在日時を取得
 func getNowTimeStamp() -> String {
-	let now = NSDate()
-	let dateFormatter = NSDateFormatter()
-	dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP")
-	dateFormatter.timeStyle = .MediumStyle
-	dateFormatter.dateStyle = .MediumStyle
-	let now_time = dateFormatter.stringFromDate(now)
+	let now = Date()
+	let dateFormatter = DateFormatter()
+	dateFormatter.locale = Locale(identifier: "ja_JP")
+	dateFormatter.timeStyle = .medium
+	dateFormatter.dateStyle = .medium
+	let now_time = dateFormatter.string(from: now)
 	return now_time
 }
 
@@ -87,26 +88,26 @@ func getNowTimeStamp() -> String {
 // 現在の年を取得
 func getCurrentYear() -> Int {
 	var year:Int = 0
-	let now = NSDate()
-	let df = NSDateFormatter()
-	df.timeStyle = .ShortStyle//ここを変更すると出力日付の情報量を変更可能
-	df.dateStyle = .ShortStyle//ここを変更すると出力日付の情報量を変更可能
-	df.locale = NSLocale(localeIdentifier: "ja_JP")
+	let now = Date()
+	let df = DateFormatter()
+	df.timeStyle = .short//ここを変更すると出力日付の情報量を変更可能
+	df.dateStyle = .short//ここを変更すると出力日付の情報量を変更可能
+	df.locale = Locale(identifier: "ja_JP")
 	df.dateFormat = "yyyy"
-	year = Int(df.stringFromDate(now))!
+	year = Int(df.string(from: now))!
 	return year
 }
 
 // Last Year ******************************************************************
 // 去年の年を取得
 func getLastYear() -> Int {
-	let now = NSDate() //現在時刻
-	let df = NSDateFormatter()
-	df.timeStyle = .ShortStyle
-	df.dateStyle = .ShortStyle
-	df.locale = NSLocale(localeIdentifier: "ja_JP")
+	let now = Date() //現在時刻
+	let df = DateFormatter()
+	df.timeStyle = .short
+	df.dateStyle = .short
+	df.locale = Locale(identifier: "ja_JP")
 	df.dateFormat = "yyyy"
-	let lastYear:Int = Int(df.stringFromDate(now))! - 1
+	let lastYear:Int = Int(df.string(from: now))! - 1
 	return lastYear
 }
 
@@ -120,11 +121,11 @@ func getRandomColor() -> UIColor{
 }
 
 // HEX Color web like hex color default white **********************************
-func hexColor( hex:NSString, alpha:Float) -> UIColor {
-	let hex = hex.stringByReplacingOccurrencesOfString("#", withString: "")
-	let scanner = NSScanner(string: hex as String)
+func hexColor( _ hex:NSString, alpha:Float) -> UIColor {
+	let hex = hex.replacingOccurrences(of: "#", with: "")
+	let scanner = Scanner(string: hex as String)
 	var color: UInt32 = 0
-	if ( scanner.scanHexInt(&color)) {
+	if ( scanner.scanHexInt32(&color)) {
 		return UIColor (
 			red:CGFloat((color & 0xFF0000) >> 16) / 255.0,
 			green: CGFloat((color & 0x00FF00) >> 8) / 255.0,
@@ -160,52 +161,53 @@ func concrete() -> UIColor { return hexColor("#95a5a6", alpha: 1) }
 func asbesto() -> UIColor { return hexColor("#7f8c8d", alpha: 1) }
 
 // Preset Colors With Alpha ***************************************************
-func tuquise(alpha:Float) -> UIColor { return hexColor("#1abc9c", alpha: alpha) }
-func green_sea(alpha:Float) -> UIColor { return hexColor("#16a085", alpha: alpha) }
-func emerald(alpha:Float) -> UIColor { return hexColor("#2ecc71", alpha: alpha) }
-func nephritis(alpha:Float) -> UIColor { return hexColor("#27ae60", alpha: alpha) }
-func peter_river(alpha:Float) -> UIColor { return hexColor("#3498db", alpha: alpha) }
-func belize_hole(alpha:Float) -> UIColor { return hexColor("#2980b9", alpha: alpha) }
-func amethyst(alpha:Float) -> UIColor { return hexColor("#9b59b6", alpha: alpha) }
-func wisteria(alpha:Float) -> UIColor { return hexColor("#8e44ad", alpha: alpha) }
-func wet_asphalt(alpha:Float) -> UIColor { return hexColor("#34495e", alpha: alpha) }
-func midnight_blue(alpha:Float) -> UIColor { return hexColor("#2c3e50", alpha: alpha) }
-func sun_flower(alpha:Float) -> UIColor { return hexColor("#f1c40f", alpha: alpha) }
-func orange(alpha:Float) -> UIColor { return hexColor("#EF953F", alpha: alpha) }
-func carrot(alpha:Float) -> UIColor { return hexColor("#e67e22", alpha: alpha) }
-func pumpkin(alpha:Float) -> UIColor { return hexColor("#d35400", alpha: alpha) }
-func alizarin(alpha:Float) -> UIColor { return hexColor("#e74c3c", alpha: alpha) }
-func pomegranate(alpha:Float) -> UIColor { return hexColor("#c0392b", alpha: alpha) }
-func clouds(alpha:Float) -> UIColor { return hexColor("#ecf0f1", alpha: alpha) }
-func silver(alpha:Float) -> UIColor { return hexColor("#bdc3c7", alpha: alpha) }
-func concrete(alpha:Float) -> UIColor { return hexColor("#95a5a6", alpha: alpha) }
-func asbesto(alpha:Float) -> UIColor { return hexColor("#7f8c8d", alpha: alpha) }
+func tuquise(_ alpha:Float) -> UIColor { return hexColor("#1abc9c", alpha: alpha) }
+func green_sea(_ alpha:Float) -> UIColor { return hexColor("#16a085", alpha: alpha) }
+func emerald(_ alpha:Float) -> UIColor { return hexColor("#2ecc71", alpha: alpha) }
+func nephritis(_ alpha:Float) -> UIColor { return hexColor("#27ae60", alpha: alpha) }
+func peter_river(_ alpha:Float) -> UIColor { return hexColor("#3498db", alpha: alpha) }
+func belize_hole(_ alpha:Float) -> UIColor { return hexColor("#2980b9", alpha: alpha) }
+func amethyst(_ alpha:Float) -> UIColor { return hexColor("#9b59b6", alpha: alpha) }
+func wisteria(_ alpha:Float) -> UIColor { return hexColor("#8e44ad", alpha: alpha) }
+func wet_asphalt(_ alpha:Float) -> UIColor { return hexColor("#34495e", alpha: alpha) }
+func midnight_blue(_ alpha:Float) -> UIColor { return hexColor("#2c3e50", alpha: alpha) }
+func sun_flower(_ alpha:Float) -> UIColor { return hexColor("#f1c40f", alpha: alpha) }
+func orange(_ alpha:Float) -> UIColor { return hexColor("#EF953F", alpha: alpha) }
+func carrot(_ alpha:Float) -> UIColor { return hexColor("#e67e22", alpha: alpha) }
+func pumpkin(_ alpha:Float) -> UIColor { return hexColor("#d35400", alpha: alpha) }
+func alizarin(_ alpha:Float) -> UIColor { return hexColor("#e74c3c", alpha: alpha) }
+func pomegranate(_ alpha:Float) -> UIColor { return hexColor("#c0392b", alpha: alpha) }
+func clouds(_ alpha:Float) -> UIColor { return hexColor("#ecf0f1", alpha: alpha) }
+func silver(_ alpha:Float) -> UIColor { return hexColor("#bdc3c7", alpha: alpha) }
+func concrete(_ alpha:Float) -> UIColor { return hexColor("#95a5a6", alpha: alpha) }
+func asbesto(_ alpha:Float) -> UIColor { return hexColor("#7f8c8d", alpha: alpha) }
 
 // original log output ********************************************************
-public func Log_method(function: String = #function, file: String = #file, line: Int = #line) {
+public func Log_method(_ function: String = #function, file: String = #file, line: Int = #line) {
 	#if DEBUG
 		let now = NSDate() // 現在日時の取得
-		let dateFormatter = NSDateFormatter()
-		dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP")
-		dateFormatter.timeStyle = .MediumStyle
-		dateFormatter.dateStyle = .MediumStyle
-		let now_time = dateFormatter.stringFromDate(now)
+		let dateFormatter = DateFormatter()
+		dateFormatter.locale = Locale(identifier: "ja_JP") as Locale!
+		dateFormatter.dateStyle = .medium
+		dateFormatter.timeStyle = .medium
+		let now_time = dateFormatter.string(from: now as Date)
 		print("[",now_time,"] \(file), Func: \(function), Line: \(line))")
 	#endif
 }
 
-public func Log(message: String,
+public func Log(_ message: String,
                 function: String = #function,
                 file: String = #file,
                 line: Int = #line) {
 	#if DEBUG
 		let now = NSDate() // 現在日時の取得
-		let dateFormatter = NSDateFormatter()
-		dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP")
-		dateFormatter.timeStyle = .MediumStyle
-		dateFormatter.dateStyle = .MediumStyle
-		let now_time = dateFormatter.stringFromDate(now)
+		let dateFormatter = DateFormatter()
 
-		print("[",now_time,"] \"\(message)\" \(file), Func: \(function), Line: \(line))")
+		dateFormatter.locale = Locale(identifier: "ja_JP") as Locale!
+		dateFormatter.dateStyle = .medium
+		dateFormatter.timeStyle = .medium
+		let now_time = dateFormatter.string(from: now as Date)
+
+		print("[\(now_time)] \"\(message)\" \(file), Func: \(function), Line: \(line))")
 	#endif
 }
