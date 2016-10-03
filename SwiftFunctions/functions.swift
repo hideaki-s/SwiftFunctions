@@ -191,7 +191,8 @@ public func Log_method(_ function: String = #function, file: String = #file, lin
 		dateFormatter.dateStyle = .medium
 		dateFormatter.timeStyle = .medium
 		let now_time = dateFormatter.string(from: now as Date)
-		print("[",now_time,"] \(file), Func: \(function), Line: \(line))")
+		let path:NSString = file as NSString
+		print("[\(now_time)] \(path.lastPathComponent), line: \(line) func: \(function)")
 	#endif
 }
 
@@ -203,11 +204,14 @@ public func Log(_ message: String,
 		let now = NSDate() // 現在日時の取得
 		let dateFormatter = DateFormatter()
 
+		let path:NSString = file as NSString
+
+
 		dateFormatter.locale = Locale(identifier: "ja_JP") as Locale!
 		dateFormatter.dateStyle = .medium
 		dateFormatter.timeStyle = .medium
 		let now_time = dateFormatter.string(from: now as Date)
 
-		print("[\(now_time)] \"\(message)\" \(file), Func: \(function), Line: \(line))")
+		print("[\(now_time)] \(path.lastPathComponent), line: \(line) func: \(function) : \"\(message)\" ")
 	#endif
 }

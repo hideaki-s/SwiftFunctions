@@ -25,6 +25,26 @@ class ViewController: UIViewController, SFSafariViewControllerDelegate {
 		button.layer.cornerRadius = 9
 		self.view.addSubview(button)
 
+		getShareFiles()
+	}
+
+	func getShareFiles() {
+		let path_s = NSHomeDirectory() + "/Documents"
+		let fm:NSArray = try! FileManager().contentsOfDirectory(atPath: path_s) as NSArray
+
+		for i in 0..<fm.count {
+			let data:Data = try! NSData(contentsOfFile: "\(path_s)/\(fm[i])") as Data
+			Log("\(path_s)/\(fm[i])")
+
+			if ( data.count == 0 ) {
+				Log("no data")
+			}
+			else {
+				if let str = NSString(data:data , encoding:String.Encoding.utf8.rawValue) {
+					Log("\(data.count):\(str)")
+				}
+			}
+		}
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
