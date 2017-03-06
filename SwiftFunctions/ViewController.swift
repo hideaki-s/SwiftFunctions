@@ -13,8 +13,14 @@ var urlString:String = "https://google.com"
 
 class ViewController: UIViewController, SFSafariViewControllerDelegate {
 
+
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+
+
+
 		Log_method()
 		let button = UIButton(frame: CGRect(x: 10, y: 10, width: 160, height: 50))
 		button.center = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
