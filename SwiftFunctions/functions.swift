@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import WebKit
 
+
+
 // ------------------------------------------------------------------------------
 // NSObject Class Extension
 // ------------------------------------------------------------------------------
@@ -245,6 +247,34 @@ class PaddingLabel: UILabel {
 		intrinsicContentSize.width += padding.left + padding.right
 		return intrinsicContentSize
 	}
+}
+// ------------------------------------------------------------------------------
+// Loading JSON File
+// ------------------------------------------------------------------------------
+func loadJsonArray(forFilename fileName: String) -> Array<Any>? {
+	if let path = Bundle.main.path(forResource: fileName, ofType: "json") {
+		do {
+			let jsonData = try NSData(contentsOfFile: path, options: NSData.ReadingOptions.mappedIfSafe)
+			do {
+				let jsonResult: Array<Any> = try JSONSerialization.jsonObject(with: jsonData as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as! Array<Any>
+				return jsonResult
+			} catch {}
+		} catch {}
+	}
+	return nil
+}
+
+func loadJsonDuctionary(forFilename fileName: String) -> NSDictionary? {
+	if let path = Bundle.main.path(forResource: fileName, ofType: "json") {
+		do {
+			let jsonData = try NSData(contentsOfFile: path, options: NSData.ReadingOptions.mappedIfSafe)
+			do {
+				let jsonResult:NSDictionary = try JSONSerialization.jsonObject(with: jsonData as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
+				return jsonResult
+			} catch {}
+		} catch {}
+	}
+	return nil
 }
 // 0000000 -> 0,000,000 *******************************************************
 func numWithComma(_ input:Int) -> String{
